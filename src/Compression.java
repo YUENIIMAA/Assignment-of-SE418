@@ -1,4 +1,6 @@
 import java.io.FileReader;
+import java.io.FileWriter;
+//import  java.io.BufferedWriter;
 import java.io.IOException;
 import java.util.*;
 
@@ -19,7 +21,8 @@ public class Compression {
                 else {
                     pre_weight.put(c,pre_weight.get(c) + 1);
                 }
-            };
+            }
+            ipt.close();
         }
         catch (IOException e){
             System.out.println(e);
@@ -53,7 +56,7 @@ public class Compression {
         Vector<Character> new_node = null;
         int new_weight = 0;
         int bridge_weight = 0;
-        Map<Character,Stack> table = new HashMap<Character,Stack>();
+        Map<Character,Stack<Integer>> table = new HashMap<Character,Stack<Integer>>();
 
         while (true) {
             Iterator entries = weight.entrySet().iterator();
@@ -451,8 +454,66 @@ public class Compression {
                 }
             }
         }
-        System.out.println(table);
+        //System.out.println(table);
         //System.out.println(weight);
-    }
 
+        Map<Character,Vector<Integer>> Encodingtable = new HashMap<Character, Vector<Integer>>();
+        for (Character key : table.keySet()) {
+            Vector<Integer> code = new Vector<Integer>();
+            while (!table.get(key).empty()) {
+                code.add(table.get(key).peek());
+                table.get(key).pop();
+            }
+            Encodingtable.put(key,code);
+        }
+
+        //System.out.println(Encodingtable);
+
+        Vector<Character> output = new Vector<Character>();
+        int cnt = 0;
+        try {
+            ipt = new FileReader(InputFileName);
+            char[] buf = new char[1];
+            while(ipt.read(buf) != -1) {
+                char c = buf[0];
+                cnt++;
+                for (int i = 0;i < Encodingtable.get(c).size();++i) {
+                    if (Encodingtable.get(c).get(i) == 1) {
+                        output.add('1');
+                    }
+                    else {
+                        output.add('0');
+                    }
+                }
+            }
+            ipt.close();
+        }
+        catch (IOException e){
+            System.out.println(e);
+        }
+
+        try {
+            FileWriter fw = new FileWriter(OutputFileName);
+            fw.write(String.valueOf(cnt));
+            fw.write(' ');
+            fw.write(String.valueOf(Encodingtable.size()));
+            fw.write(' ');
+            for (Character key : Encodingtable.keySet()) {
+                fw.write(key);
+                fw.write(' ');
+                for (int i = 0;i < Encodingtable.get(key).size();++i) {
+                    fw.write(String.valueOf(Encodingtable.get(key).get(i)));
+                }
+                fw.write(' ');
+            }
+            for (int i = 0;i < output.size();++i)
+            {
+                fw.write(output.get(i));
+            }
+            fw.close();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
 }
