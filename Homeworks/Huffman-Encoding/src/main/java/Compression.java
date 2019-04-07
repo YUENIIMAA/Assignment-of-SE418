@@ -34,13 +34,13 @@ public class Compression {
             if(!weight.containsKey(i)) {
                 Vector<Character> tmp1 = new Vector<Character>();
                 tmp1.add(key);
-                Vector<Vector> tmp2 = new Vector();
+                Vector<Vector> tmp2 = new Vector<Vector>();
                 tmp2.add(tmp1);
                 weight.put(i,tmp2);
             }
             else {
                 Vector<Vector> tmp2 = weight.get(i);
-                Vector<Character> tmp1 = new Vector();
+                Vector<Character> tmp1 = new Vector<Character>();
                 tmp1.add(key);
                 tmp2.add(tmp1);
                 weight.put(i,tmp2);
@@ -50,9 +50,9 @@ public class Compression {
         //System.out.println(weight);
 
         boolean hasSingle = false;
-        Vector<Character> bridge_vector = null;
-        Vector<Character> node_1 = null;
-        Vector<Character> node_2 = null;
+        Vector bridge_vector = null;
+        Vector node_1 = null;
+        Vector node_2 = null;
         Vector<Character> new_node = null;
         int new_weight = 0;
         int bridge_weight = 0;
@@ -66,16 +66,16 @@ public class Compression {
             //System.out.println(Wgt);
             Vector<Vector> current_line = weight.get(Wgt);
 
-            if(!hasSingle) { //上一行没有多余元素的条件下
+            if(!hasSingle) {
                 //System.out.println(current_line.size());
                 //System.out.println(current_line.size() % 2);
-                if(current_line.size() % 2 == 0) { //本行元素数为偶数的情况下
+                if(current_line.size() % 2 == 0) {
                     //System.out.println("Case 1");
                     //System.out.println(current_line.size());
                     //System.out.println(current_line);
                     for (int i = 0;i < current_line.size();++i) {
-                        node_1 = (Vector<Character>) current_line.get(i);
-                        node_2 = (Vector<Character>) current_line.get(i+1);
+                        node_1 = current_line.get(i);
+                        node_2 = current_line.get(i+1);
 
                         for (int j = 0;j < node_1.size();++j) {
                             char key = (Character) node_1.get(j);
@@ -132,13 +132,13 @@ public class Compression {
                     //System.out.println(weight);
                     //System.out.println(table);
                 }
-                else { //本行元素书为基数的情况下
+                else { //
                     //System.out.println("Case 2");
                     hasSingle = true;
 
                     for (int i = 0;i < current_line.size() - 1;++i) {
-                        node_1 = (Vector<Character>) current_line.get(i);
-                        node_2 = (Vector<Character>) current_line.get(i+1);
+                        node_1 = current_line.get(i);
+                        node_2 = current_line.get(i+1);
 
                         for (int j = 0;j < node_1.size();++j) {
                             char key = (Character) node_1.get(j);
@@ -192,17 +192,17 @@ public class Compression {
                         ++i;
                     }
 
-                    int position = current_line.size() - 1; //计算多余元素在该行的位置
-                    if (position == 0) { //表明改行实际上仅剩这一个元素
+                    int position = current_line.size() - 1; //
+                    if (position == 0) { //
                         //System.out.println("Only One Element");
-                        if (!entries.hasNext()) { //若同时整个表仅剩这一行，则哈夫曼编码完成
+                        if (!entries.hasNext()) { //
                             //System.out.println("The Last One");
                             break;
                         }
                     }
 
-                    //哈夫曼编码未完成，暂存最后这一节点，并作为左节点给0
-                    bridge_vector = (Vector<Character>) current_line.get(position);
+                    //
+                    bridge_vector = current_line.get(position);
                     bridge_weight = Wgt;
 
                     for (int j = 0;j < bridge_vector.size();++j) {
@@ -225,15 +225,15 @@ public class Compression {
 
                 }
             }
-            else { //上一行元素有多余元素的情况下
-                if (current_line.size() % 2 == 0) {//上一行多一个，本行为偶数，故又会多出一个
+            else { //
+                if (current_line.size() % 2 == 0) {//
                     //System.out.println("Case 3");
                     hasSingle = true;
 
-                    //取本行头节点
-                    node_1 = (Vector<Character>) current_line.get(0);
+                    //
+                    node_1 = current_line.get(0);
 
-                    //作为右节点塞1
+                    //
                     for (int j = 0;j < node_1.size();++j) {
                         char key = (Character) node_1.get(j);
                         if (!table.containsKey(key)) {
@@ -248,7 +248,7 @@ public class Compression {
                         }
                     }
 
-                    //组合暂存节点与本行头节点
+                    //
                     new_node = new Vector<Character>();
                     for (int j = 0;j < node_1.size();++j) {
                         new_node.add((Character) node_1.get(j));
@@ -269,10 +269,10 @@ public class Compression {
                         weight.put(new_weight,new_line);
                     }
 
-                    //正常处理第二个到倒数第二个节点
+                    //
                     for (int i = 1;i < current_line.size() - 1;++i) {
-                        node_1 = (Vector<Character>) current_line.get(i);
-                        node_2 = (Vector<Character>) current_line.get(i+1);
+                        node_1 = current_line.get(i);
+                        node_2 = current_line.get(i+1);
 
                         for (int j = 0;j < node_1.size();++j) {
                             char key = (Character) node_1.get(j);
@@ -326,9 +326,9 @@ public class Compression {
                         ++i;
                     }
 
-                    //暂存最后一个节点
-                    int position = current_line.size() - 1; //计算多余元素在该行的位置
-                    bridge_vector = (Vector<Character>) current_line.get(position);
+                    //
+                    int position = current_line.size() - 1; //
+                    bridge_vector = current_line.get(position);
                     bridge_weight = Wgt;
 
                     for (int j = 0;j < bridge_vector.size();++j) {
@@ -349,14 +349,14 @@ public class Compression {
                     //System.out.println(weight);
                     weight.remove(Wgt);
                 }
-                else {//本行为奇数，加上上一行多余的刚好够用
+                else {//
                     //System.out.println("Case 4");
                     hasSingle = false;
 
-                    //取本行头节点
-                    node_1 = (Vector<Character>) current_line.get(0);
+                    //
+                    node_1 = current_line.get(0);
 
-                    //作为右节点塞1
+                    //
                     for (int j = 0;j < node_1.size();++j) {
                         char key = (Character) node_1.get(j);
                         if (!table.containsKey(key)) {
@@ -371,7 +371,7 @@ public class Compression {
                         }
                     }
 
-                    //组合暂存节点与本行头节点
+                    //
                     new_node = new Vector<Character>();
                     for (int j = 0;j < node_1.size();++j) {
                         new_node.add((Character) node_1.get(j));
@@ -393,8 +393,8 @@ public class Compression {
                     }
 
                     for (int i = 1;i < current_line.size();++i) {
-                        node_1 = (Vector<Character>) current_line.get(i);
-                        node_2 = (Vector<Character>) current_line.get(i+1);
+                        node_1 = current_line.get(i);
+                        node_2 = current_line.get(i+1);
 
                         for (int j = 0;j < node_1.size();++j) {
                             char key = (Character) node_1.get(j);
