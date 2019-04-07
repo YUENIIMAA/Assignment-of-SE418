@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main2(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.print("Input -c to compress or -d to decompress:");
         if (input.hasNext()) {
