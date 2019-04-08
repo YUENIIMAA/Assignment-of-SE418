@@ -3,7 +3,15 @@ package huffman_encoding;
 import java.util.*;
 
 public class Compression {
-    public String compress(String inputStream,Character optType) {
+    private final String encodingTable;
+    private final String encodedContent;
+
+    public Compression(String text) {
+        this.encodingTable = compress(text,'t');
+        this.encodedContent= compress(text,'c');
+    }
+
+    private String compress(String inputStream,Character optType) {
         //System.out.println(inputStream);
         Map<Character,Integer> pre_weight = new TreeMap<Character,Integer>();
         for (int i = 0;i < inputStream.length();++i) {
@@ -495,5 +503,13 @@ public class Compression {
         else {
             return  retCode;
         }
+    }
+
+    public String getEncodingTable() {
+        return encodingTable;
+    }
+
+    public String getEncodedContent() {
+        return encodedContent;
     }
 }

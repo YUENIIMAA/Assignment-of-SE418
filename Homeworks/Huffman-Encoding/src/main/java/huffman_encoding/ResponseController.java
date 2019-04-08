@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResponseController {
 
     @RequestMapping("/encoding")
-    public Response response(@RequestParam(value="text", defaultValue="Huffman Encoding") String text) {
-        return new Response(text);
+    public Compression compress(@RequestParam(value="text", defaultValue="Huffman Encoding") String text) {
+        return new Compression(text);
     }
 }
