@@ -6,6 +6,11 @@ public class Encoding {
     private final String encodingTable;
     private final String encodedContent;
 
+    public Encoding() {
+        this.encodingTable = "null";
+        this.encodedContent= "null";
+    }
+
     public Encoding(String text) {
         this.encodingTable = compress(text,'t');
         this.encodedContent= compress(text,'c');
