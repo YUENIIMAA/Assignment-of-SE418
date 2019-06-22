@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Encoding</title>
+</head>
+<body>
+
+<header>
+    <h1>Huffman Encoding</h1>
+</header>
+
+<nav>
+    <a th:href="@{/index}">Home</a>
+    <a th:href="@{/encoding}">Encode</a>
+    <a th:href="@{/status}">Status</a>
+</nav>
+
+<main>
+    <form th:action="@{/encode}" method="get">
+        <div>
+            <label>Insert your message here :</label><br />
+            <textarea rows="5" cols="50" input type="text" name="text" id="text"></textarea>
+        </div>
+        <input type="submit" value="Encode" id="encode"/>
+    </form>
+</main>
+
+<footer>
+    <small>Richard 517021910158 Assignment of SE418</small>
+</footer>
+
+</body>
+</html>

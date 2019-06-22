@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Status</title>
+</head>
+<body>
+
+<header>
+    <h1>Huffman Encoding</h1>
+</header>
+
+<nav>
+    <a th:href="@{/index}">Home</a>
+    <a th:href="@{/encoding}">Encode</a>
+    <a th:href="@{/status}">Status</a>
+</nav>
+
+<main>
+    <form th:action="@{/actuator/health}" method="get">
+        <input type="submit" value="Check Status" id="check"/>
+    </form>
+</main>
+
+<footer>
+    <small>Richard 517021910158 Assignment of SE418</small>
+</footer>
+
+</body>
+</html>
